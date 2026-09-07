@@ -15,6 +15,7 @@
   let invCategory = "All";
   let ordSearch = "";
   let ordStatus = "All";
+  let composerBotDraft = null; // { doubt: bool } while the composer holds an untouched bot-generated draft
   const notesStore = {}; // convId -> notes text (in-memory only)
 
   const $ = (sel, root) => (root || document).querySelector(sel);
@@ -309,14 +310,19 @@
 
       <div class="quick-replies" id="quick-replies"></div>
 
+      <div class="bot-draft-hint" id="bot-draft-hint" hidden>
+        <svg><use href="#i-bot"/></svg>
+        <span id="bot-draft-hint-text"></span>
+        <button class="dismiss" id="bot-draft-dismiss" title="Not a bot reply — clear this label"><svg><use href="#i-x"/></svg></button>
+      </div>
+
       <div class="composer">
-        <button class="composer-icon-btn" title="Attach (demo only)"><svg><use href="#i-clip"/></svg></button>
         <textarea id="composer-input" rows="1" placeholder="Type a reply to ${escapeHtml(conv.customer.split(" ")[0])}…"></textarea>
-        <button class="composer-icon-btn" title="Emoji (demo only)"><svg><use href="#i-smile"/></svg></button>
         <button class="btn-send" id="send-btn" title="Send"><svg><use href="#i-send"/></svg></button>
       </div>
     `;
 
+    composerBotDraft = null;
     renderThread(conv);
 
     $("#quick-replies").innerHTML = DATA.quickReplies.map((q, i) => `
@@ -340,11 +346,37 @@
     };
 
     const input = $("#composer-input");
-    input.addEventListener("input", () => { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 110) + "px"; });
+    input.addEventListener("input", () => {
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 110) + "px";
+      // A real keystroke means the agent is now editing — the draft is no
+      // longer purely bot output, so drop the bot-draft label.
+      clearComposerBotDraft();
+    });
     input.addEventListener("keydown", e => {
       if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(conv); }
     });
     $("#send-btn").onclick = () => sendMessage(conv);
+    $("#bot-draft-dismiss").onclick = () => clearComposerBotDraft();
+  }
+
+  /* Marks the current composer contents as a bot-generated draft (or clears
+     that state). `doubt` flags a low-confidence draft the bot itself wants
+     a human to double-check before it goes out. */
+  function setComposerBotDraft(doubt) {
+    composerBotDraft = { doubt: !!doubt };
+    const hint = $("#bot-draft-hint");
+    if (!hint) return;
+    hint.hidden = false;
+    hint.classList.toggle("doubt", !!doubt);
+    $("#bot-draft-hint-text").textContent = doubt
+      ? "Bot drafted this, but isn't fully confident — double-check before sending"
+      : "Bot drafted this from live inventory/order data";
+  }
+  function clearComposerBotDraft() {
+    composerBotDraft = null;
+    const hint = $("#bot-draft-hint");
+    if (hint) hint.hidden = true;
   }
 
   function renderThread(conv) {
@@ -358,13 +390,21 @@
         lastLabel = label;
       }
       const isOut = m.from === "agent";
+      const isBot = isOut && m.origin === "bot";
+      let headerHtml = "";
+      if (isBot) {
+        headerHtml = `<span class="bot-tag"><svg><use href="#i-bot"/></svg>Automated reply${m.agent ? ` <span class="via">— ${escapeHtml(m.agent)}</span>` : ""}</span>`;
+      } else if (isOut && m.agent) {
+        headerHtml = `<span class="agent-tag">${escapeHtml(m.agent)}</span>`;
+      }
       html += `
         <div class="msg-row ${isOut ? "out" : "in"}">
           <div class="bubble">
-            ${isOut && m.agent ? `<span class="agent-tag">${escapeHtml(m.agent)}</span>` : ""}
+            ${headerHtml}
             ${escapeHtml(m.text)}
             <div class="bubble-meta">
               <span class="bubble-time">${escapeHtml(bubbleTime(m.time))}</span>
+              ${isBot && m.doubt ? `<svg class="doubt-icon" title="Bot isn't fully confident — please verify before relying on this"><use href="#i-help-circle"/></svg>` : ""}
               ${isOut ? `<svg class="tick ${m.tick === "read" ? "read" : ""}"><use href="#${m.tick === "sent" ? "i-check" : "i-check2"}"/></svg>` : ""}
             </div>
           </div>
@@ -379,10 +419,15 @@
     const text = input.value.trim();
     if (!text) return;
     const msg = { from: "agent", agent: currentAgent.name, text, time: "Just now", tick: "sent" };
+    if (composerBotDraft) {
+      msg.origin = "bot";
+      msg.doubt = composerBotDraft.doubt;
+    }
     conv.messages.push(msg);
     conv.lastTime = "Just now";
     input.value = "";
     input.style.height = "auto";
+    clearComposerBotDraft();
     renderThread(conv);
     renderConvList();
 
@@ -394,6 +439,7 @@
     const input = $("#composer-input");
     if (q.text) {
       input.value = (input.value ? input.value + " " : "") + q.text;
+      setComposerBotDraft(false);
       input.focus();
       return;
     }
@@ -403,6 +449,9 @@
       if (!orders.length) { showToast("No orders found for this customer"); return; }
       const o = orders[0];
       input.value = `Your order ${o.id} (${formatINR(o.amount)}) is currently ${o.status}.` + (o.tracking !== "-" ? ` Tracking ID: ${o.tracking}.` : "");
+      // A "Pending" order is an unsettled fact (payment/confirmation still in flux) —
+      // the bot flags that as worth double-checking before it goes out.
+      setComposerBotDraft(o.status === "Pending");
       input.focus();
       return;
     }
@@ -411,6 +460,7 @@
       if (!orders.length) { showToast("No tracking ID available for this customer"); return; }
       const o = orders[0];
       input.value = `Your order ${o.id} tracking ID is ${o.tracking}. You can track it with your courier partner using this ID.`;
+      setComposerBotDraft(false);
       input.focus();
       return;
     }
@@ -455,6 +505,10 @@
     const input = $("#composer-input");
     if (input) {
       input.value = (input.value ? input.value + " " : "") + text;
+      const total = product.variants.reduce((s, v) => s + v.stock, 0);
+      // Low or out-of-stock items move fast — the bot flags those as worth a
+      // quick warehouse check before promising them to the customer.
+      setComposerBotDraft(stockStatus(total) !== "In Stock");
       input.focus();
     }
   }
@@ -677,7 +731,13 @@
     if (!o) return;
     const conv = convForPhone(o.phone);
     const body = `
-      <div class="modal-row"><span class="k">Customer</span><span class="v">${escapeHtml(o.customer)}</span></div>
+      <div class="modal-row">
+        <span class="k">Customer</span>
+        <span class="v" style="display:flex; align-items:center; gap:8px;">
+          ${escapeHtml(o.customer)}
+          ${conv ? `<button class="icon-btn-sm" id="modal-open-inbox" title="Open conversation in Inbox"><svg><use href="#i-inbox"/></svg></button>` : ""}
+        </span>
+      </div>
       <div class="modal-row"><span class="k">Phone</span><span class="v">${escapeHtml(o.phone)}</span></div>
       <div class="modal-row"><span class="k">Date</span><span class="v">${o.date}</span></div>
       <div class="modal-row"><span class="k">Status</span><span class="v">${statusBadge(o.status)}</span></div>
@@ -685,7 +745,6 @@
       <div style="margin:14px 0 6px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint);">Items</div>
       ${o.items.map(i => `<div class="modal-row"><span class="k">${i.qty}× ${escapeHtml(i.product)}</span><span class="v">${formatINR(i.price * i.qty)}</span></div>`).join("")}
       <div class="modal-row" style="margin-top:6px; border-top:1px solid var(--border); padding-top:10px;"><span class="k" style="font-weight:700; color:var(--text);">Total</span><span class="v">${formatINR(o.amount)}</span></div>
-      ${conv ? `<button class="btn-primary" style="margin-top:16px;" id="modal-open-inbox">Open conversation in Inbox</button>` : ""}
     `;
     openModal("Order " + o.id, body);
     if (conv) {

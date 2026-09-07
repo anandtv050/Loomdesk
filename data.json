@@ -82,7 +82,7 @@
       "tags": ["Order Tracking"], "unread": 1, "lastTime": "09:15",
       "messages": [
         { "from": "customer", "text": "When will my order LD-10232 be delivered? It's been 2 days", "time": "08:50" },
-        { "from": "agent", "agent": "Priya Sharma", "text": "Hi Ritesh! Your order was shipped yesterday via Shiprocket. Tracking ID: SRP4482911IN", "time": "08:55", "tick": "read" },
+        { "from": "agent", "agent": "Priya Sharma", "text": "Hi Ritesh! Your order was shipped yesterday via Shiprocket. Tracking ID: SRP4482911IN", "time": "08:55", "tick": "read", "origin": "bot" },
         { "from": "customer", "text": "Ok can you share expected delivery date?", "time": "09:15" }
       ]
     },
@@ -91,7 +91,7 @@
       "tags": ["Refund"], "unread": 0, "lastTime": "Yesterday",
       "messages": [
         { "from": "customer", "text": "The kurta I received had a stitching defect, I want a refund", "time": "Yesterday, 17:20" },
-        { "from": "agent", "agent": "Arjun Mehta", "text": "So sorry about that Ananya! I've processed a full refund of ₹899 for order LD-10233. It should reflect in 3-5 business days.", "time": "Yesterday, 17:40", "tick": "read" },
+        { "from": "agent", "agent": "Arjun Mehta", "text": "So sorry about that Ananya! I've processed a full refund of ₹899 for order LD-10233. It should reflect in 3-5 business days.", "time": "Yesterday, 17:40", "tick": "read", "origin": "bot", "doubt": true },
         { "from": "customer", "text": "Thank you for the quick help 🙏", "time": "Yesterday, 17:42" }
       ]
     },
@@ -100,7 +100,7 @@
       "tags": ["Order Update"], "unread": 0, "lastTime": "Yesterday",
       "messages": [
         { "from": "customer", "text": "Has my shirt order been delivered?", "time": "Yesterday, 12:05" },
-        { "from": "agent", "agent": "Sana Iqbal", "text": "Yes Vikram, order LD-10234 was marked Delivered today. Hope you like the fit!", "time": "Yesterday, 12:10", "tick": "read" }
+        { "from": "agent", "agent": "Sana Iqbal", "text": "Yes Vikram, order LD-10234 was marked Delivered today. Hope you like the fit!", "time": "Yesterday, 12:10", "tick": "read", "origin": "bot" }
       ]
     },
     {
