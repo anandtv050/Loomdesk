@@ -1,0 +1,155 @@
+{
+  "business": {
+    "name": "Loomdesk Apparel",
+    "whatsappNumber": "+91 98765 43210",
+    "status": "connected"
+  },
+  "agents": [
+    { "id": "u1", "username": "priya", "password": "priya123", "name": "Priya Sharma", "initials": "PS", "role": "Support Agent", "color": "#7C6FF0" },
+    { "id": "u2", "username": "arjun", "password": "arjun123", "name": "Arjun Mehta", "initials": "AM", "role": "Support Agent", "color": "#2AA876" },
+    { "id": "u3", "username": "sana", "password": "sana123", "name": "Sana Iqbal", "initials": "SI", "role": "Support Agent", "color": "#E0894F" },
+    { "id": "u4", "username": "admin", "password": "admin123", "name": "Karthik Rao", "initials": "KR", "role": "Store Admin", "color": "#3E6BE0" }
+  ],
+  "products": [
+    { "id": "p1", "sku": "LD-KUR-001", "name": "Cotton Straight Kurta", "category": "Kurtas", "price": 899, "variants": [
+        { "size": "S", "color": "Beige", "stock": 12 },
+        { "size": "M", "color": "Beige", "stock": 4 },
+        { "size": "L", "color": "Beige", "stock": 0 },
+        { "size": "XL", "color": "Beige", "stock": 7 }
+      ] },
+    { "id": "p2", "sku": "LD-JKT-014", "name": "Denim Jacket", "category": "Jackets", "price": 2199, "variants": [
+        { "size": "M", "color": "Indigo", "stock": 6 },
+        { "size": "L", "color": "Indigo", "stock": 3 },
+        { "size": "XL", "color": "Indigo", "stock": 0 }
+      ] },
+    { "id": "p3", "sku": "LD-SAR-027", "name": "Anarkali Saree", "category": "Sarees", "price": 3499, "variants": [
+        { "size": "Free Size", "color": "Maroon", "stock": 9 },
+        { "size": "Free Size", "color": "Teal", "stock": 2 }
+      ] },
+    { "id": "p4", "sku": "LD-SHT-008", "name": "Formal Slim Shirt", "category": "Shirts", "price": 1099, "variants": [
+        { "size": "39", "color": "White", "stock": 15 },
+        { "size": "40", "color": "White", "stock": 11 },
+        { "size": "42", "color": "White", "stock": 1 }
+      ] },
+    { "id": "p5", "sku": "LD-CHN-011", "name": "Chinos Trouser", "category": "Trousers", "price": 1299, "variants": [
+        { "size": "30", "color": "Khaki", "stock": 8 },
+        { "size": "32", "color": "Khaki", "stock": 0 },
+        { "size": "34", "color": "Khaki", "stock": 5 }
+      ] },
+    { "id": "p6", "sku": "LD-TEE-052", "name": "Graphic Print Tee", "category": "T-Shirts", "price": 599, "variants": [
+        { "size": "M", "color": "Black", "stock": 22 },
+        { "size": "L", "color": "Black", "stock": 18 },
+        { "size": "XL", "color": "Black", "stock": 6 }
+      ] },
+    { "id": "p7", "sku": "LD-PLZ-019", "name": "Palazzo Pants", "category": "Bottoms", "price": 799, "variants": [
+        { "size": "M", "color": "Mustard", "stock": 3 },
+        { "size": "L", "color": "Mustard", "stock": 0 }
+      ] },
+    { "id": "p8", "sku": "LD-SAR-033", "name": "Banarasi Silk Saree", "category": "Sarees", "price": 5999, "variants": [
+        { "size": "Free Size", "color": "Red-Gold", "stock": 4 }
+      ] },
+    { "id": "p9", "sku": "LD-HOD-006", "name": "Fleece Hoodie", "category": "Winterwear", "price": 1499, "variants": [
+        { "size": "M", "color": "Grey", "stock": 10 },
+        { "size": "L", "color": "Grey", "stock": 9 },
+        { "size": "XL", "color": "Grey", "stock": 2 }
+      ] },
+    { "id": "p10", "sku": "LD-LIN-023", "name": "Linen Casual Shirt", "category": "Shirts", "price": 1399, "variants": [
+        { "size": "M", "color": "Sky Blue", "stock": 0 },
+        { "size": "L", "color": "Sky Blue", "stock": 0 }
+      ] }
+  ],
+  "orders": [
+    { "id": "LD-10231", "customer": "Meera Nair", "phone": "+91 90210 11223", "date": "2026-09-06", "items": [{ "product": "Anarkali Saree", "qty": 1, "price": 3499 }], "amount": 3499, "status": "Paid", "tracking": "SRP4482910IN" },
+    { "id": "LD-10232", "customer": "Ritesh Gupta", "phone": "+91 98111 22334", "date": "2026-09-06", "items": [{ "product": "Denim Jacket", "qty": 1, "price": 2199 }, { "product": "Graphic Print Tee", "qty": 2, "price": 599 }], "amount": 3397, "status": "Shipped", "tracking": "SRP4482911IN" },
+    { "id": "LD-10233", "customer": "Ananya Iyer", "phone": "+91 99887 65544", "date": "2026-09-05", "items": [{ "product": "Cotton Straight Kurta", "qty": 1, "price": 899 }], "amount": 899, "status": "Refunded", "tracking": "SRP4482875IN" },
+    { "id": "LD-10234", "customer": "Vikram Sethi", "phone": "+91 97654 32109", "date": "2026-09-05", "items": [{ "product": "Formal Slim Shirt", "qty": 3, "price": 1099 }], "amount": 3297, "status": "Delivered", "tracking": "SRP4482801IN" },
+    { "id": "LD-10235", "customer": "Fatima Sheikh", "phone": "+91 96500 88221", "date": "2026-09-04", "items": [{ "product": "Banarasi Silk Saree", "qty": 1, "price": 5999 }], "amount": 5999, "status": "Paid", "tracking": "SRP4482790IN" },
+    { "id": "LD-10236", "customer": "Rohan Kulkarni", "phone": "+91 95123 44556", "date": "2026-09-04", "items": [{ "product": "Chinos Trouser", "qty": 1, "price": 1299 }, { "product": "Fleece Hoodie", "qty": 1, "price": 1499 }], "amount": 2798, "status": "Pending", "tracking": "-" },
+    { "id": "LD-10237", "customer": "Neha Verma", "phone": "+91 93441 22110", "date": "2026-09-03", "items": [{ "product": "Palazzo Pants", "qty": 2, "price": 799 }], "amount": 1598, "status": "Delivered", "tracking": "SRP4482650IN" },
+    { "id": "LD-10238", "customer": "Sameer Khan", "phone": "+91 90042 87651", "date": "2026-09-02", "items": [{ "product": "Linen Casual Shirt", "qty": 1, "price": 1399 }], "amount": 1399, "status": "Refunded", "tracking": "SRP4482590IN" }
+  ],
+  "conversations": [
+    {
+      "id": "c1", "customer": "Meera Nair", "phone": "+91 90210 11223", "initials": "MN", "status": "open", "assignedTo": "u1",
+      "tags": ["Stock Query"], "unread": 2, "lastTime": "09:41",
+      "messages": [
+        { "from": "customer", "text": "Hi, is the Anarkali Saree in Maroon still available in Free Size?", "time": "09:38" },
+        { "from": "customer", "text": "I wanted to order 1 today if possible", "time": "09:41" }
+      ]
+    },
+    {
+      "id": "c2", "customer": "Ritesh Gupta", "phone": "+91 98111 22334", "initials": "RG", "status": "open", "assignedTo": "u1",
+      "tags": ["Order Tracking"], "unread": 1, "lastTime": "09:15",
+      "messages": [
+        { "from": "customer", "text": "When will my order LD-10232 be delivered? It's been 2 days", "time": "08:50" },
+        { "from": "agent", "agent": "Priya Sharma", "text": "Hi Ritesh! Your order was shipped yesterday via Shiprocket. Tracking ID: SRP4482911IN", "time": "08:55", "tick": "read" },
+        { "from": "customer", "text": "Ok can you share expected delivery date?", "time": "09:15" }
+      ]
+    },
+    {
+      "id": "c3", "customer": "Ananya Iyer", "phone": "+91 99887 65544", "initials": "AI", "status": "open", "assignedTo": "u2",
+      "tags": ["Refund"], "unread": 0, "lastTime": "Yesterday",
+      "messages": [
+        { "from": "customer", "text": "The kurta I received had a stitching defect, I want a refund", "time": "Yesterday, 17:20" },
+        { "from": "agent", "agent": "Arjun Mehta", "text": "So sorry about that Ananya! I've processed a full refund of ₹899 for order LD-10233. It should reflect in 3-5 business days.", "time": "Yesterday, 17:40", "tick": "read" },
+        { "from": "customer", "text": "Thank you for the quick help 🙏", "time": "Yesterday, 17:42" }
+      ]
+    },
+    {
+      "id": "c4", "customer": "Vikram Sethi", "phone": "+91 97654 32109", "initials": "VS", "status": "resolved", "assignedTo": "u3",
+      "tags": ["Order Update"], "unread": 0, "lastTime": "Yesterday",
+      "messages": [
+        { "from": "customer", "text": "Has my shirt order been delivered?", "time": "Yesterday, 12:05" },
+        { "from": "agent", "agent": "Sana Iqbal", "text": "Yes Vikram, order LD-10234 was marked Delivered today. Hope you like the fit!", "time": "Yesterday, 12:10", "tick": "read" }
+      ]
+    },
+    {
+      "id": "c5", "customer": "Fatima Sheikh", "phone": "+91 96500 88221", "initials": "FS", "status": "open", "assignedTo": null,
+      "tags": ["New Lead", "Stock Query"], "unread": 3, "lastTime": "10:02",
+      "messages": [
+        { "from": "customer", "text": "Hello, do you have Banarasi silk sarees in Red-Gold?", "time": "09:58" },
+        { "from": "customer", "text": "What's the price?", "time": "10:00" },
+        { "from": "customer", "text": "Also do you do COD?", "time": "10:02" }
+      ]
+    },
+    {
+      "id": "c6", "customer": "Rohan Kulkarni", "phone": "+91 95123 44556", "initials": "RK", "status": "open", "assignedTo": "u2",
+      "tags": ["Payment Pending"], "unread": 1, "lastTime": "08:30",
+      "messages": [
+        { "from": "customer", "text": "I placed an order but payment failed, order shows Pending. Please confirm", "time": "08:20" },
+        { "from": "agent", "agent": "Arjun Mehta", "text": "Checking this for you right now, one moment.", "time": "08:22", "tick": "delivered" },
+        { "from": "customer", "text": "Sure, waiting", "time": "08:30" }
+      ]
+    },
+    {
+      "id": "c7", "customer": "Neha Verma", "phone": "+91 93441 22110", "initials": "NV", "status": "resolved", "assignedTo": "u1",
+      "tags": ["Delivered"], "unread": 0, "lastTime": "2 days ago",
+      "messages": [
+        { "from": "customer", "text": "Got the palazzo pants today, fit is perfect!", "time": "2 days ago" },
+        { "from": "agent", "agent": "Priya Sharma", "text": "That's wonderful to hear Neha! Thank you for shopping with us ✨", "time": "2 days ago", "tick": "read" }
+      ]
+    },
+    {
+      "id": "c8", "customer": "Sameer Khan", "phone": "+91 90042 87651", "initials": "SK", "status": "resolved", "assignedTo": "u3",
+      "tags": ["Refund"], "unread": 0, "lastTime": "3 days ago",
+      "messages": [
+        { "from": "customer", "text": "Linen shirt was out of stock after I paid, please refund", "time": "3 days ago" },
+        { "from": "agent", "agent": "Sana Iqbal", "text": "Apologies Sameer, refund of ₹1,399 has been initiated for LD-10238.", "time": "3 days ago", "tick": "read" }
+      ]
+    },
+    {
+      "id": "c9", "customer": "Divya Prakash", "phone": "+91 91234 56780", "initials": "DP", "status": "open", "assignedTo": null,
+      "tags": ["New Lead"], "unread": 1, "lastTime": "07:55",
+      "messages": [
+        { "from": "customer", "text": "Hi, do you have graphic tees in size L?", "time": "07:55" }
+      ]
+    }
+  ],
+  "quickReplies": [
+    { "label": "Check Stock", "type": "stock" },
+    { "label": "Order Status", "type": "order" },
+    { "label": "Refund Policy", "text": "Our refund policy: once approved, refunds are processed within 3-5 business days to your original payment method." },
+    { "label": "Send Tracking", "type": "tracking" },
+    { "label": "Thank You", "text": "Thank you for shopping with Loomdesk Apparel! Do let us know if you need anything else. 🙏" }
+  ]
+}
